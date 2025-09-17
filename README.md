@@ -1,7 +1,10 @@
 # TrackManiac
 Project for building RL Model trained on Track Mania Nations Forever
 
-## My Env:
+## Python Env:
+-gymnasium
+--stable_baselines3
+## My Setup:
 -TMNF via Steam (with latest Steam patch installed)
 -TMInterface (https://donadigo.com/tminterface/)
 -The AngelScripts (.as) in this proj are loaded into TMInterface
