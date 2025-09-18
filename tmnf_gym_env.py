@@ -2,7 +2,7 @@
 """
 Gymnasium environment for TrackMania Nations Forever via TMInterface RLBridge.
 
-Depends on the companion client file: RLBridgeClient.py
+Depends on the companion client file: tmnf_rl_bridge_client.py
 
 - Observations: rich state vector (speed, yaw_sin/cos, pitch, roll, v_local_fwd/lat, on_ground, cp_idx, t_scaled)
 - Actions: [steer(-1..1), throttle(0..1), brake(0..1), air_pitch(-1..1), air_roll(-1..1)]
@@ -26,7 +26,7 @@ import gymnasium as gym
 import numpy as np
 
 # Import the existing client
-from RLBridgeClient import RLBridgeClient, Telemetry
+from tmnf_rl_bridge_client import RLBridgeClient, Telemetry
 
 
 # ---------------- Split timer book -----------------
@@ -34,6 +34,8 @@ class SplitBook:
     """Tracks best time at each checkpoint and gives a reward for improvements."""
     def __init__(self):
         self.best: dict[int, float] = {}
+        self._last_cp_time_s: float = 0.0
+
 
     def reward(self, cp_idx: int, t_sec: float) -> float:
         # First time hitting this CP -> small bonus and set PB
@@ -73,7 +75,7 @@ class EnvConfig:
 
 
 class TMNFEnv(gym.Env):
-    """Gymnasium-compatible env powered by RLBridgeClient.
+    """Gymnasium-compatible env powered by tmnf_rl_bridge_client.
 
     Observation (10, ): [speed, yaw_sin, yaw_cos, pitch, roll, v_fwd, v_lat, on_ground, cp_scaled, t_scaled]
     Action (5, ): [steer, throttle, brake, air_pitch, air_roll]
